@@ -1,3 +1,13 @@
 @url = https://cmp53m6fyk.execute-api.us-east-1.amazonaws.com/prod/
 
-GET {{url}}/employee
+GET {{url}}/employee?id=5fd97eb8-fa5c-4929-a708-56557441044a
+###
+
+POST {{url}}/employee
+content-type: application/json
+ 
+  {
+     "name": "Employee1",
+     "position": "Engineer"
+  }
+  ###
