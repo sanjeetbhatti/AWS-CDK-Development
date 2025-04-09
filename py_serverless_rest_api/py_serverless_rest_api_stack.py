@@ -36,7 +36,13 @@ class PyServerlessRestApiStack(Stack):
 
         # Building api and attaching it to the stack
         api = aws_apigateway.RestApi(self, "Employee-Api")
-        employee_resource = api.root.add_resource("employee")
+        # Adding CORS support to API Gateway
+        cors_options = aws_apigateway.CorsOptions(
+             allow_origins=aws_apigateway.Cors.ALL_ORIGINS,
+             allow_methods=aws_apigateway.Cors.ALL_METHODS,
+         )
+        # Adding CORS options to the employee resource
+        employee_resource = api.root.add_resource("employee", default_cors_preflight_options=cors_options)
         
         # Attaching the lambda to the api gateway
         employee_lambda_integration = aws_apigateway.LambdaIntegration(employee_lambda) #lambda integration object from api gateway

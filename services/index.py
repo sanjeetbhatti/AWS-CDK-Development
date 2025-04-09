@@ -18,6 +18,10 @@ def handler(event, context):
         return {
             "statusCode": 200,
             "body": json.dumps({"id": item["id"]}),
+            "headers": {    # adding Access-Control-Allow-Origin headers inside response.
+                "Access-Control-Allow-Origin": "*", # asterisk instead of method name if we don't know which method (GET, POST, etc.) would be supported.
+                "Access-Control-Allow-Methods": "*",
+            }
         }
 
     if method == "GET":
@@ -28,9 +32,18 @@ def handler(event, context):
             return {
                 "statusCode": 200,
                 "body": json.dumps(response["Item"]),
+                "headers": {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "*",
+                },
             }
         else:
             return {
                 "statusCode": 404,
                 "body": json.dumps("Not found"),
+                # TODO: refactor headers code to remove code duplication
+                "headers": {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "*",
+                },
             }
